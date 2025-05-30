@@ -1,3 +1,4 @@
+from .docker import is_docker_uri
 from .fileio import (
     can_be_deleted,
     copyfile,

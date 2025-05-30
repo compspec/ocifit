@@ -1,0 +1,20 @@
+{
+    "schemaVersion": "0.1.0",
+    "mediaType": "application/vnd.oci.image.compatibilities.v1+json",
+    "compatibilities": [
+        {
+            "compspec.architecture": "amd64",
+            "compspec.uri": "ghcr.io/converged-computing/flux-mpich:rocky8",
+            "compspec.base_image": "ghcr.io/converged-computing/flux-mpich:rocky8",
+            "compspec.gpu": false,
+            "compspec.mpi_version": "4.3.0",
+            "compspec.mpi_variant": "mpich",
+            "compspec.low_latency_networking": true
+        }
+    ],
+    "annotations": {
+        "oci.opencontainers.image.created": "2025-05-29T23:06:43Z"
+    },
+    "uri": "ghcr.io/converged-computing/lammps-reax:rocky8-mpich"
+}
+

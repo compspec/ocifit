@@ -7,24 +7,9 @@ import os
 import ocifit.defaults as defaults
 from ocifit import utils
 from ocifit.cache import Cache
+from ocifit.parsers import get_parser
 
-from .dockerfile import get_dockerfile, parse_dockerfile
-
-
-def is_docker_uri(uri):
-    """
-    Check if a given string is a valid Docker image URI.
-    """
-    # This regex covers:
-    # - Registry hostname (optional)
-    # - Project name
-    # - Image name
-    # - Tag (optional)
-    # - Digest (optional)
-    docker_regex = r"^([a-zA-Z0-9.-]+/)?[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+)?(\/[a-zA-Z0-9._-]+)*[:@][a-zA-Z0-9._-]+$"
-    regex = re.compile(docker_regex)
-    match = regex.match(uri)
-    return bool(match)
+from .dockerfile import get_dockerfile
 
 
 class CompatGenerator:
@@ -32,7 +17,19 @@ class CompatGenerator:
     Generate a Compatibility specification.
     """
 
-    def generate(self, image, use_cache=True, model_name=defaults.model_name, save=False, uri=None):
+    def __init__(self, parser, use_cache=True):
+        """
+        Setup a compatibility generator.
+        """
+        self.use_cache = use_cache
+
+        # parser here is just the name to organize the cache
+        self.cache = Cache(parser)
+
+        # The parser can use the cache too.
+        self.parser = get_parser(parser)(self.cache)
+
+    def generate(self, image, model_name=defaults.model_name, save=False, uri=None):
         """
         Generate the compatibility specification.
         """
@@ -40,7 +37,7 @@ class CompatGenerator:
 
         # Case 1: We are give a URI Dockerfile
         if not os.path.exists(image):
-            if not is_docker_uri(image):
+            if not utils.is_docker_uri(image):
                 raise ValueError(f"{image} is not a valid Docker URI or existing filepath")
             content = get_dockerfile(image)
             uri = image
@@ -48,12 +45,14 @@ class CompatGenerator:
             content = utils.read_file(image)
 
         # Clean up the result
-        result = parse_dockerfile(content, use_cache=use_cache)
+        result = self.parser.parse_dockerfile(content)
         compat = {}
         for key in result:
             if not result[key]:
                 continue
             compat[key] = result[key]
+            if isinstance(compat[key], list):
+                compat[key].sort()
 
         # Did the user provide a uri?
         if uri is not None:
