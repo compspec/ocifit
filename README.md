@@ -38,6 +38,12 @@ Then test against an image, optionally adding a uri to include.
 ocifit compat --uri ghcr.io/converged-computing/lammps-reax:ubuntu2204 ./Dockerfile
 ```
 
+Try using a different parser:
+
+```bash
+ocifit compat --uri ghcr.io/converged-computing/lammps-reax:ubuntu2204 ./Dockerfile --parser nfd
+```
+
 By default, parsed parent images are saved to a cache in `~/.ocifit`. If you add `--save` and provide a URI with `--uri`, your image will be as well. Note that this currently doesn't parse into a proper artifact because we still need to think about how the key/value pairs will work.
 
  - [see example for lammps-reax](examples/lammps-reax.json)

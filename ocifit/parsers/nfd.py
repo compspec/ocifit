@@ -1,3 +1,5 @@
+import ocifit.schema as schema
+
 from .gemini import GeminiParser
 
 
@@ -54,4 +56,8 @@ class NFDParser(GeminiParser):
             or image["base_image"] in unknown
         ):
             del image["base_image"]
-        return image
+
+        updated = {}
+        for key, value in image.items():
+            updated[f"compspec.{key}"] = value
+        return schema.new_artifact([updated])
