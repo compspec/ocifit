@@ -51,6 +51,8 @@ class CompatGenerator:
             if not result[key]:
                 continue
             compat[key] = result[key]
+            if isinstance(compat[key], list):
+                compat[key].sort()
 
         # Did the user provide a uri?
         if uri is not None:

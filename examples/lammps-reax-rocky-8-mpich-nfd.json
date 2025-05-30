@@ -1,0 +1,8 @@
+{
+    "architecture": "amd64",
+    "uri": "ghcr.io/converged-computing/lammps-reax:rocky8-mpich",
+    "base_image": "ghcr.io/converged-computing/flux-mpich:rocky8",
+    "mpi_version": "4.3.0",
+    "mpi_variant": "mpich",
+    "network_low_latency": true
+}
