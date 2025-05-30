@@ -59,5 +59,7 @@ class NFDParser(GeminiParser):
 
         updated = {}
         for key, value in image.items():
+            if key == "uri":
+                continue
             updated[f"compspec.{key}"] = value
         return schema.new_artifact([updated])

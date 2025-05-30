@@ -56,7 +56,10 @@ class CompatGenerator:
 
         # Did the user provide a uri?
         if uri is not None:
-            compat["uri"] = uri
+            if "annotations" in compat:
+                compat["annotations"]["compat.uri"] = uri
+            else:
+                compat["uri"] = uri
 
         # If we are saving and have a uri
         if save and uri is not None:

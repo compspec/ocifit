@@ -4,7 +4,6 @@
     "compatibilities": [
         {
             "compspec.architecture": "amd64",
-            "compspec.uri": "ghcr.io/converged-computing/flux-mpich:rocky8",
             "compspec.base_image": "ghcr.io/converged-computing/flux-mpich:rocky8",
             "compspec.gpu": false,
             "compspec.mpi_version": "4.3.0",
@@ -13,8 +12,7 @@
         }
     ],
     "annotations": {
-        "oci.opencontainers.image.created": "2025-05-29T23:06:43Z"
-    },
-    "uri": "ghcr.io/converged-computing/lammps-reax:rocky8-mpich"
+        "oci.opencontainers.image.created": "2025-05-29T23:19:23Z",
+        "compat.uri": "ghcr.io/converged-computing/lammps-reax:rocky8-mpich"
+    }
 }
-
