@@ -8,11 +8,12 @@
             "compspec.gpu": false,
             "compspec.mpi_version": "4.3.0",
             "compspec.mpi_variant": "mpich",
-            "compspec.low_latency_networking": true
+            "compspec.low_latency_networking": true,
+            "compspec.mpi_paths": "/opt/mpich-4.3.0/lib/.libs,/usr/lib64,/usr/lib64/pmix,/usr/lib64/prte"
         }
     ],
     "annotations": {
-        "oci.opencontainers.image.created": "2025-05-29T23:19:23Z",
+        "oci.opencontainers.image.created": "2025-05-30T00:09:11Z",
         "compat.uri": "ghcr.io/converged-computing/lammps-reax:rocky8-mpich"
     }
 }
