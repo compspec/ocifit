@@ -11,20 +11,24 @@ class Cache:
     The cache directory is ~/.ocifit.
     """
 
-    def __init__(self):
+    def __init__(self, parser):
         """
         Initializes the Cache object.
         Creates the cache directory if it doesn't exist.
         """
-        self.cache_dir = os.path.join(os.path.expanduser("~"), ".ocifit")
-        if not os.path.exists(self.cache_dir):
-            os.makedirs(self.cache_dir)
+        self.parser = parser
+
+    @property
+    def cache_dir(self):
+        return os.path.join(os.path.expanduser("~"), ".ocifit", self.parser)
 
     def load(self):
         """
         Load all images from the cache
         """
         items = {}
+        if not os.path.exists(self.cache_dir):
+            return items
         for uri in os.listdir(self.cache_dir):
             path = os.path.join(self.cache_dir, uri)
             metadata = utils.read_json(path)
@@ -60,6 +64,9 @@ class Cache:
         Writes a compatibility spec to the cache.
         """
         filepath = self.uri_to_path(uri)
+        dirname = os.path.dirname(filepath)
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
         try:
             utils.write_json(data, filepath)
         except Exception as e:

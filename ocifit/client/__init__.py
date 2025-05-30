@@ -88,6 +88,12 @@ def get_parser():
             default=defaults.model_name,
         )
         command.add_argument(
+            "--parser",
+            help="Select parser type to use.",
+            default="software",
+            choices=["software", "nfd"],
+        )
+        command.add_argument(
             "--no-cache",
             dest="no_cache",
             help="Don't use the cache",

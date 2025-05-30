@@ -28,15 +28,13 @@ def main(args, parser, extra, subparser):
     if args.outfile:
         print("       outfile: %s" % args.outfile)
 
-    cli = CompatGenerator()
+    cli = CompatGenerator(args.parser, use_cache=not args.no_cache)
     compat = cli.generate(
         args.image,
-        use_cache=not args.no_cache,
         model_name=args.model_name,
         save=args.save,
         uri=args.uri,
     )
-    compat["software"].sort()
 
     # If we don't have a file and we have a URI, save to cache.
     # Default to using outfile first, then outdir if defined
