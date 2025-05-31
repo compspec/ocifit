@@ -13,6 +13,13 @@ from ocifit.parsers import get_parser
 from .dockerfile import get_dockerfile
 
 
+def get_matched_paths(guts, pattern="mpi"):
+    """
+    Filter down paths to a pattern.
+    """
+    return [x for x in guts[uri]["fs"] if pattern in x and ".so" in x and "test" not in x]
+
+
 class CompatGenerator:
     """
     Generate a Compatibility specification.
@@ -30,7 +37,9 @@ class CompatGenerator:
         # The parser can use the cache too.
         self.parser = get_parser(parser)(self.cache)
 
-    def generate(self, image, model_name=defaults.model_name, save=False, uri=None):
+    def generate(
+        self, image, model_name=defaults.model_name, save=False, uri=None, paths=None, pattern="mpi"
+    ):
         """
         Generate the compatibility specification.
         """
@@ -59,15 +68,28 @@ class CompatGenerator:
         if uri is not None:
 
             # Get different files from base OS
-            guts = generate_container_guts(uri)
-            mpi_paths = [
-                x for x in guts[uri]["fs"] if "mpi" in x and ".so" in x and "test" not in x
-            ]
-            mpi_dirs = list(set([os.path.dirname(x) for x in mpi_paths]))
+            # This is a dictionary, where the key is the basename
+            lib_paths = generate_container_guts(uri, paths=paths)
+
+            # If no paths, just provide MPI paths
+            if not paths:
+                mpi_paths = get_matched_paths(guts, args.pattern)
 
             if "annotations" in compat:
+                if paths is not None:
+                    for path, link_set in lib_paths.items():
+
+                        # The binary basename will be a prefix to its path
+                        # and subsequent link items in a flattened list
+                        basename = os.path.basename(path)
+                        compat["compatibilities"][0][f"compspec.binary.{basename}"] = path
+                        for i, link_path in enumerate(link_set):
+                            key = f"compspec.binary.{basename}.link.{i}"
+                            compat["compatibilities"][0][key] = link_path
+                else:
+                    compat["compatibilities"][0][f"compspec.binary.{basename}"] = mpi_paths
+
                 compat["annotations"]["compat.uri"] = uri
-                compat["compatibilities"][0]["compspec.mpi_paths"] = ",".join(mpi_dirs)
             else:
                 compat["uri"] = uri
                 compat["compspec.mpi_paths"] = ",".join(mpi_dirs)

@@ -34,6 +34,8 @@ def main(args, parser, extra, subparser):
         model_name=args.model_name,
         save=args.save,
         uri=args.uri,
+        paths=args.path,
+        pattern=args.pattern,
     )
 
     # If we don't have a file and we have a URI, save to cache.

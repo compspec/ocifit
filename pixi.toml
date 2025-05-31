@@ -20,4 +20,4 @@ pytorch = ">=2.6.0,<3"
 google-generativeai = ">=0.8.5,<0.9"
 
 [pypi-dependencies]
-container-guts = ">=0.0.16, <0.0.17"
+container-guts = ">=0.0.17, <0.0.18"

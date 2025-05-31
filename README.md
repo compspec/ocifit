@@ -44,6 +44,12 @@ Try using a different parser:
 ocifit compat --uri ghcr.io/converged-computing/lammps-reax:ubuntu2204 ./Dockerfile --parser nfd
 ```
 
+Also try adding one or more `--path` to an executable to run ldd against and provide links in the compatibility spec.
+
+```bash
+ocifit compat --uri ghcr.io/converged-computing/lammps-reax:ubuntu2204 ./Dockerfile --parser nfd --path /usr/bin/lmp
+```
+
 By default, parsed parent images are saved to a cache in `~/.ocifit`. If you add `--save` and provide a URI with `--uri`, your image will be as well. Note that this currently doesn't parse into a proper artifact because we still need to think about how the key/value pairs will work.
 
  - [see example for lammps-reax](examples/lammps-reax.json)

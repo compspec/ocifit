@@ -1,0 +1,33 @@
+{
+    "schemaVersion": "0.1.0",
+    "mediaType": "application/vnd.oci.image.compatibilities.v1+json",
+    "compatibilities": [
+        {
+            "compspec.architecture": "amd64",
+            "compspec.base_image": "ubuntu:22.04",
+            "compspec.gpu": true,
+            "compspec.low_latency_networking": true,
+            "compspec.mpi_version": "4.1.2",
+            "compspec.mpi_variant": "openmpi",
+            "compspec.binary.lmp": "/usr/bin/lmp",
+            "compspec.binary.lmp.link.0": "/lib/x86_64-linux-gnu/libgomp.so.1 ",
+            "compspec.binary.lmp.link.1": "/usr/local/lib/libmpi.so.40 ",
+            "compspec.binary.lmp.link.2": "/lib/x86_64-linux-gnu/libjpeg.so.8 ",
+            "compspec.binary.lmp.link.3": "/lib/x86_64-linux-gnu/libstdc++.so.6 ",
+            "compspec.binary.lmp.link.4": "/lib/x86_64-linux-gnu/libm.so.6 ",
+            "compspec.binary.lmp.link.5": "/lib/x86_64-linux-gnu/libgcc_s.so.1 ",
+            "compspec.binary.lmp.link.6": "/lib/x86_64-linux-gnu/libc.so.6 ",
+            "compspec.binary.lmp.link.7": "/usr/local/lib/libopen-rte.so.40 ",
+            "compspec.binary.lmp.link.8": "/usr/local/lib/libopen-pal.so.40 ",
+            "compspec.binary.lmp.link.9": "/lib/x86_64-linux-gnu/libhwloc.so.15 ",
+            "compspec.binary.lmp.link.10": "/lib/x86_64-linux-gnu/libz.so.1 ",
+            "compspec.binary.lmp.link.11": "/lib/x86_64-linux-gnu/libevent_core-2.1.so.7 ",
+            "compspec.binary.lmp.link.12": "/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.7 ",
+            "compspec.binary.lmp.link.13": "/lib/x86_64-linux-gnu/libudev.so.1 "
+        }
+    ],
+    "annotations": {
+        "oci.opencontainers.image.created": "2025-05-30T18:11:21Z",
+        "compat.uri": "ghcr.io/converged-computing/lammps-reax:ubuntu2204"
+    }
+}

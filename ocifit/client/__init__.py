@@ -94,6 +94,17 @@ def get_parser():
             choices=["software", "nfd"],
         )
         command.add_argument(
+            "--pattern",
+            help="Pattern to filter paths to, if --path not provided",
+            default="mpi",
+        )
+        command.add_argument(
+            "--path",
+            help="Absolute path or basename of executable to run ldd on",
+            action="append",
+            default=None,
+        )
+        command.add_argument(
             "--no-cache",
             dest="no_cache",
             help="Don't use the cache",
@@ -162,11 +173,8 @@ def run():
 
     # Pass on to the correct parser
     return_code = 0
-    try:
-        main(args=args, parser=parser, extra=extra, subparser=helper)
-        sys.exit(return_code)
-    except UnboundLocalError:
-        return_code = 1
+    main(args=args, parser=parser, extra=extra, subparser=helper)
+    sys.exit(return_code)
 
     help(return_code)
 
